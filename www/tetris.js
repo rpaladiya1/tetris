@@ -1,4 +1,7 @@
-﻿var AppTracker = {
+﻿var apikey = "PiBRJHzWCYY89EOVy83aULDo8WYxWZLq";
+//var location = "inapp";
+
+var AppTracker = {
     startSession: function (apikey, successcallback, errorcallback) {
         cordova.exec(successcallback, errorcallback, "AppTracker", "startSession", [apikey]);
     },
@@ -15,6 +18,7 @@
         cordova.exec(successcallback, errorcallback, "AppTracker", "transaction", [name, value, currency]);
     },
     loadModule: function (location, userData, successcallback, errorcallback) {
+        console.log('apptracker loadmodule');
         cordova.exec(successcallback, errorcallback, "AppTracker", "loadModule", [location, userData]);
     },
     loadModuleToCache: function (location, userData, successcallback, errorcallback) {
@@ -280,8 +284,8 @@ function startGame() {
     //AppTracker.startSession(YOUR_API_KEY);
 
     //// cache Leadbolt Ad without showing it
-    AppTracker.loadModuleToCache("inapp");
-    AppTracker.loadModuleToCache("video");
+    //AppTracker.loadModuleToCache("inapp");
+    //AppTracker.loadModuleToCache("video");
 
 
     play();
@@ -324,6 +328,8 @@ function keydown(ev) {
 //-------------------------------------------------------------------------
 
 function play() {
+    loadModule();
+    AppTracker.loadModule(YOUR_PLACEMENT_LOCATION);
     $("#game_over").hide();
     $("#homediv").hide();
     step = Math.max(speed.min, speed.start - (0.005 * rows));
@@ -333,11 +339,11 @@ function lose() {
     AppTracker.startSession(YOUR_API_KEY);
 
     // cache Leadbolt Ad without showing it
-    AppTracker.loadModuleToCache("inapp");
-    AppTracker.loadModuleToCache("video");
+    //AppTracker.loadModuleToCache("inapp");
+    //AppTracker.loadModuleToCache("video");
 
 
-
+    AppTracker.loadModule(YOUR_PLACEMENT_LOCATION);
 
     $("#game_over").show();
     $("#homediv").show();

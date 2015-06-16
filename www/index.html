@@ -393,63 +393,21 @@
     <script src="js/stats.js"></script>
     <script src="AppTracker.js"></script>
 
-    <script type="text/javascript" src="js/consolebasednativeapi.js"></script>
+    <!--<script type="text/javascript" src="js/consolebasednativeapi.js"></script>-->
     <script src="cordova.js"></script>
-    <script src="cordova2-sub.js"></script>
+    <!--<script src="cordova2-sub.js"></script>-->
     <!--<script src="cordova_plugins.js"></script>-->
     <script type="text/javascript">
         app.initialize();
 
-
-        //var YOUR_API_KEY = "is2byYEVjbXiFjVjaYIt6sM4aEIqMWZ3";
-        //var YOUR_PLACEMENT_LOCATION = "inapp";
-
-        //var loadbtn = document.getElementById("load_btn");
-
-
-        //var app = {
-        //    // Application Constructor
-        //    initialize: function () {
-        //        console.log('initialize calll');
-        //        this.bindEvents();
-        //    },
-        //    // Bind Event Listeners
-        //    //
-        //    // Bind any events that are required on startup. Common events are:
-        //    // 'load', 'deviceready', 'offline', and 'online'.
-        //    bindEvents: function () {
-        //        console.log('I am bindEvents');
-        //        //document.addEventListener('deviceready', this.onDeviceReady, true);
-        //        //document.addEventListener("deviceready", this.onDeviceReady, true);
-        //        docss.addEventListener("deviceready", function () {
-        //            console.log('I am addEventListener');
-        //        }, true);
-        //        console.log('I am bindEvents end');
-        //    },
-        //    // deviceready Event Handler
-        //    //
-        //    // The scope of 'this' is the event. In order to call the 'receivedEvent'
-        //    // function, we must explicitly call 'app.receivedEvent(...);'
-        //    onDeviceReady: function () {
-        //        alert('It works!');
-        //        app.receivedEvent('deviceready');
-        //    },
-        //    // Update DOM on a Received Event
-        //    receivedEvent: function (id) {
-        //        console.log('I am receivedEvent DOM');
-        //        var parentElement = docss.getElementById(id);
-        //        var listeningElement = parentElement.querySelector('.listening');
-        //        var receivedElement = parentElement.querySelector('.received');
-
-        //        listeningElement.setAttribute('style', 'display:none;');
-        //        receivedElement.setAttribute('style', 'display:block;');
-
-        //        console.log('Received Event: ' + id);
-        //    }
-        //};
-
-
-
+        document.addEventListener('onMediaFinished', function (e) {
+            if (e.viewCompleted) {
+                console.log('User finished watching rewarded video');
+            } else {
+                console.log('User skipped watching rewarded video');
+            }
+        });
+       
 
 
         // add AFW Event Listeners
@@ -476,6 +434,15 @@
             AppTracker.loadModuleToCache(YOUR_PLACEMENT_LOCATION);
         }, false);
 
+        function loadModuleToCache() {
+            console.log('I am loadModuleToCache');
+            AppTracker.loadModuleToCache(YOUR_PLACEMENT_LOCATION);
+        }
+
+        function loadModule() {
+            console.log('I am  loadModule');
+            AppTracker.loadModule(YOUR_PLACEMENT_LOCATION);
+        }
 
     </script>
 
