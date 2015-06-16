@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Javascript Tetris</title>
+
+    <style>
+        @import url(http://fonts.googleapis.com/css?family=Play);
+
+        @media screen and (min-width: 0px) and (min-height: 0px) {
+            #tetris {
+                font-size: 0.75em;
+                width: 250px;
+            }
+
+            #menu {
+                width: 70px;
+                height: 200px;
+            }
+
+            #upcoming {
+                width: 90px;
+                height: 100px;
+            }
+
+            #canvas {
+                width: 130px;
+                height: 200px;
+            }
+        }
+        /* 10px chunks */
+        @media screen and (min-width: 400px) and (min-height: 400px) {
+            #tetris {
+                font-size: 1.00em;
+                width: 350px;
+            }
+
+            #menu {
+                width: 150px;
+                height: 300px;
+            }
+
+            #upcoming {
+                width: 105px;
+                height: 95px;
+            }
+
+            #canvas {
+                width: 150px;
+                height: 300px;
+            }
+        }
+        /* 15px chunks */
+        @media screen and (min-width: 500px) and (min-height: 500px) {
+            #tetris {
+                font-size: 1.25em;
+                width: 450px;
+            }
+
+            #menu {
+                width: 200px;
+                height: 400px;
+            }
+
+            #upcoming {
+                width: 160px;
+                height: 130px;
+            }
+
+            #canvas {
+                width: 200px;
+                height: 400px;
+            }
+        }
+        /* 20px chunks */
+        @media screen and (min-width: 600px) and (min-height: 600px) {
+            #tetris {
+                font-size: 1.50em;
+                width: 550px;
+            }
+
+            #menu {
+                width: 160px;
+                height: 500px;
+            }
+
+            #upcoming {
+                width: 125px;
+                height: 125px;
+            }
+
+            #canvas {
+                width: 370px;
+                height: 500px;
+            }
+        }
+        /* 25px chunks */
+        @media screen and (min-width: 700px) and (min-height: 700px) {
+            #tetris {
+                font-size: 1.75em;
+                width: 650px;
+            }
+
+            #menu {
+                width: 300px;
+                height: 600px;
+            }
+
+            #upcoming {
+                width: 150px;
+                height: 150px;
+            }
+
+            #canvas {
+                width: 300px;
+                height: 600px;
+            }
+        }
+        /* 30px chunks */
+        @media screen and (min-width: 800px) and (min-height: 800px) {
+            #tetris {
+                font-size: 2.00em;
+                width: 750px;
+            }
+
+            #menu {
+                width: 350px;
+                height: 700px;
+            }
+
+            #upcoming {
+                width: 175px;
+                height: 175px;
+            }
+
+            #canvas {
+                width: 350px;
+                height: 700px;
+            }
+        }
+        /* 35px chunks */
+        @media screen and (min-width: 900px) and (min-height: 900px) {
+            #tetris {
+                font-size: 2.25em;
+                width: 850px;
+            }
+
+            #menu {
+                width: 400px;
+                height: 800px;
+            }
+
+            #upcoming {
+                width: 200px;
+                height: 200px;
+            }
+
+            #canvas {
+                width: 400px;
+                height: 800px;
+            }
+        }
+        /* 40px chunks */
+        body {
+            font-family: Helvetica, sans-serif;
+            width: 100%;
+            margin: 0px;
+            padding: 0px;
+            overflow-x: hidden;
+            font-family: 'Play', sans-serif;
+        }
+
+        #stats {
+            display: inline-block;
+            vertical-align: top;
+            display: none;
+        }
+
+        #canvas {
+            display: inline-block;
+            vertical-align: top;
+            /*background: url(img/1.jpg);*/
+            box-shadow: 10px 10px 10px rgba(0,0,0,0.5);
+            border: 2px solid #B67804;
+            width: 70%;
+            float: right;
+            position: relative;
+            top: 0px;
+            bottom: 0px;
+            height: 100%;
+            background-color: rgba(0,0,0,0.8);
+        }
+
+        #menu {
+            display: inline-block;
+            vertical-align: top;
+            position: relative;
+            width: 28%;
+        }
+
+            #menu p {
+                margin: 0.5em 0;
+                text-align: center;
+                color: #fff;
+                text-transform: uppercase;
+            }
+
+                #menu p a {
+                    text-decoration: none;
+                    color: black;
+                }
+
+            #menu #start {
+                display: none;
+            }
+
+        #upcoming {
+            display: block;
+            margin: 0 auto;
+            background-color: rgba(0,0,0,0.8);
+            border: 2px solid #B67804;
+        }
+
+        #Highestscore {
+            color: #FFAA08;
+            font-weight: bold;
+        }
+
+        #score {
+            color: #FFAA08;
+            font-weight: bold;
+            vertical-align: middle;
+        }
+
+        #rows {
+            color: #FF0A0C;
+            font-weight: bold;
+            vertical-align: middle;
+        }
+
+        #startDiv {
+            padding: 5px 20px;
+            text-shadow: -1px -1px 0 #e79802;
+            background: #ffaa08;
+            border: 1px solid #e79802;
+            background-image: -webkit-linear-gradient(top, #ffbe43, #ffaa08);
+            background-image: -moz-linear-gradient(top, #ffbe43, #ffaa08);
+            background-image: -ms-linear-gradient(top, #ffbe43, #ffaa08);
+            background-image: -o-linear-gradient(top, #ffbe43, #ffaa08);
+            background-image: linear-gradient(to bottom, #ffbe43, #ffaa08);
+            -webkit-border-radius: 5px;
+            -moz-border-radius: 5px;
+            border-radius: 5px;
+            -webkit-box-shadow: 0 1px 0 rgba(255, 255, 255, .5) inset, 0 -1px 0 rgba(255, 255, 255, .1) inset, 0 4px 0 #e79802, 0 4px 2px rgba(0, 0, 0, .5);
+            -moz-box-shadow: 0 1px 0 rgba(255, 255, 255, .5) inset, 0 -1px 0 rgba(255, 255, 255, .1) inset, 0 4px 0 #e79802, 0 4px 2px rgba(0, 0, 0, .5);
+            box-shadow: 0 1px 0 rgba(255, 255, 255, .5) inset, 0 -1px 0 rgba(255, 255, 255, .1) inset, 0 4px 0 #e79802, 0 4px 2px rgba(0, 0, 0, .5);
+            border-radius: 9px;
+            cursor: pointer;
+            display: inline-block;
+        }
+
+        #stats {
+            position: absolute;
+            bottom: 0em;
+            right: 1em;
+        }
+
+        .imageArrow {
+            height: 26px;
+            width: 26px;
+            cursor: pointer;
+        }
+
+        #tetris {
+            margin: 1em auto;
+            padding: 2%;
+            border: 4px solid black;
+            background-color: #F8F8F8;
+            background: url(img/6.jpg);
+            background-size: 100% 100%;
+            width: 95.4%;
+            margin: 0px;
+            position: absolute;
+            bottom: 0px;
+            top: 0px;
+        }
+
+        #menu p.upcoming {
+            margin-top: 0px;
+        }
+
+        #menu p.up_arrow {
+            margin-top: 30px;
+        }
+
+        #game_over {
+            display: none;
+            position: fixed;
+            top: 30%;
+            bottom: auto;
+            z-index: 9999;
+            left: auto;
+            right: auto;
+            width: 100%;
+            text-align: center;
+            color: #fff;
+        }
+
+        .inner_detail {
+            display: inline-block;
+            padding: 30px 100px;
+            border: 2px solid #B67804;
+            border-radius: 10px;
+        }
+
+        @media screen and (max-width:480px) {
+            .up_arrow img, .left_arrow img, .down_arrow img, .right_arrow img; {
+                width: 18px;
+                height: 18px;
+            }
+
+            .left_arrow img {
+                margin-left: -15px;
+            }
+
+            .right_arrow img {
+                margin-right: -15px;
+            }
+        }
+
+        #homediv {
+            display: none;
+            position: fixed;
+            opacity: 0.9;
+            width: 100%;
+            height: 100%;
+            z-index: 2222;
+            background-color: black;
+            top: 0;
+            left: 0;
+        }
+    </style>
+
+    <!--<script src="js/jquery-1.10.2.js"></script>-->
+    <!--<script data-main="app" src="lib/cordova.js"></script>-->
+</head>
+<body>
+    <div id="deviceready" class="blink app">
+        <p class="event listening">Connecting to Device</p>
+        <p class="event received">Device is Ready</p>
+
+        <div id="tetris">
+            <div id="menu">
+                <p id="start"><a href="javascript:play();">Press Space to Play.</a></p>
+                <p class="upcoming"><canvas id="upcoming"></canvas></p>
+                <p>High score <span id="Highestscore">00000</span></p>
+                <p>score <span id="score">00000</span></p>
+                <p>Level <span id="spanForLevel">1</span></p>
+                <p>rows <span id="rows">0</span></p>
+                <p><span id="startDiv" onclick="startGame()">Start</span></p>
+                <p class="up_arrow">
+                    <img src="img/Up.png" onclick="clickUpButton()" class="imageArrow" alt="Up">
+                </p>
+                <p style="width:50%;float:left;" class="left_arrow">
+                    <img src="img/Left.png" onclick="clickLeftButton()" class="imageArrow" alt="Left">
+                </p>
+                <p style="width:50%;float:left;" class="right_arrow">
+                    <img src="img/Right.png" onclick="clickRightButton()" class="imageArrow" alt="Right">
+                </p>
+                <p style="width:100%;float:left;" class="down_arrow">
+                    <img src="img/Down.png" onclick="clickDownButton()" class="imageArrow" alt="Down">
+                </p>
+            </div>
+            <canvas id="canvas">
+                Sorry, this example cannot be run because your browser does not support the &lt;canvas&gt; element
+            </canvas>
+            <div id="game_over">
+                <div class="inner_detail">
+                    <p>Game Over</p>
+                    <p>Total Score <span id="displayScore"></span></p>
+                    <p><span id="startDiv" onclick="startGame()">Play Again</span></p>
+                </div>
+            </div>
+            <div id="homediv"></div>
+        </div>
+
+
+    </div>
+
+
+    <!--<script src="cordova.js"></script>-->
+    <!--<script src="domWeb.js"></script>-->
+    <script src="js/index.js"></script>
+    <script src="js/stats.js"></script>
+    <script src="AppTracker.js"></script>
+
+    <script type="text/javascript" src="js/consolebasednativeapi.js"></script>
+    <script src="cordova.js"></script>
+    <script src="cordova2-sub.js"></script>
+    <!--<script src="cordova_plugins.js"></script>-->
+    <script type="text/javascript">
+        app.initialize();
+
+
+        //var YOUR_API_KEY = "is2byYEVjbXiFjVjaYIt6sM4aEIqMWZ3";
+        //var YOUR_PLACEMENT_LOCATION = "inapp";
+
+        //var loadbtn = document.getElementById("load_btn");
+
+
+        //var app = {
+        //    // Application Constructor
+        //    initialize: function () {
+        //        console.log('initialize calll');
+        //        this.bindEvents();
+        //    },
+        //    // Bind Event Listeners
+        //    //
+        //    // Bind any events that are required on startup. Common events are:
+        //    // 'load', 'deviceready', 'offline', and 'online'.
+        //    bindEvents: function () {
+        //        console.log('I am bindEvents');
+        //        //document.addEventListener('deviceready', this.onDeviceReady, true);
+        //        //document.addEventListener("deviceready", this.onDeviceReady, true);
+        //        docss.addEventListener("deviceready", function () {
+        //            console.log('I am addEventListener');
+        //        }, true);
+        //        console.log('I am bindEvents end');
+        //    },
+        //    // deviceready Event Handler
+        //    //
+        //    // The scope of 'this' is the event. In order to call the 'receivedEvent'
+        //    // function, we must explicitly call 'app.receivedEvent(...);'
+        //    onDeviceReady: function () {
+        //        alert('It works!');
+        //        app.receivedEvent('deviceready');
+        //    },
+        //    // Update DOM on a Received Event
+        //    receivedEvent: function (id) {
+        //        console.log('I am receivedEvent DOM');
+        //        var parentElement = docss.getElementById(id);
+        //        var listeningElement = parentElement.querySelector('.listening');
+        //        var receivedElement = parentElement.querySelector('.received');
+
+        //        listeningElement.setAttribute('style', 'display:none;');
+        //        receivedElement.setAttribute('style', 'display:block;');
+
+        //        console.log('Received Event: ' + id);
+        //    }
+        //};
+
+
+
+
+
+        // add AFW Event Listeners
+        document.addEventListener('onModuleCached', function (e) {
+
+            console.log('onModuleCached');
+        });
+        document.addEventListener('onModuleClosed', function (e) {
+            // Ad has been closed, cache the next one
+            console.log('onModuleClosed');
+            AppTracker.loadModuleToCache(e.placement);
+        });
+        document.addEventListener('onModuleLoaded', function (e) {
+            console.log('onModuleLoaded');
+
+        });
+        document.addEventListener('onModuleFailed', function (e) {
+            console.log('onModuleFailed');
+        });
+
+        document.addEventListener('deviceready', function () {
+            // Initialize AppFireworks SDK and cache the Add
+            AppTracker.startSession(YOUR_API_KEY);
+            AppTracker.loadModuleToCache(YOUR_PLACEMENT_LOCATION);
+        }, false);
+
+
+    </script>
+
+    <script src="js/jquery-1.10.2.js"></script>
+    <script src="http://code.jquery.com/mobile/1.4.2/jquery.mobile-1.4.2.min.js"></script>
+    <script src="tetris.js"></script>
+
+</body>
+</html>
