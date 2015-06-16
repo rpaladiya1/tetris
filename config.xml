@@ -38,8 +38,9 @@
   <gap:plugin name="org.apache.cordova.vibration"/>
 
 
-  <plugin name="LeadboltPlugin" value="com.LeadboltPlugin.LeadboltPlugin" />
-  <plugin name="LeadboltNotificationPlugin" value="com.LeadboltPlugin.LeadboltNotificationPlugin" />
+  
+  <gap:plugin name="LeadboltPlugin" value="com.LeadboltPlugin.LeadboltPlugin" />
+  <gap:plugin name="LeadboltNotificationPlugin" value="com.LeadboltPlugin.LeadboltNotificationPlugin" />
   
 
   <icon src="icon.png"/>
